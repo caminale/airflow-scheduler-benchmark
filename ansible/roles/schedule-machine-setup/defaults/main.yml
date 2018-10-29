@@ -1,0 +1,4 @@
+---
+
+deployment_databases_git: 'https://github.com/caminale/deployment-databases.git'
+deployment_databases_git_path: '/opt/deployment-databases'

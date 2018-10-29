@@ -1,0 +1,7 @@
+
+region = "us-central1"
+project_name = "project-id"
+account_file_path = "path/to/your/gcp/json/key"
+
+
+
