@@ -43,7 +43,7 @@
 /k8s-templates/scala-api-secret.yml
 
 # Jetbrains IDE
-/.idea
+.idea
 /.idea_modules
 .DS_Store
 .DS_Store?
