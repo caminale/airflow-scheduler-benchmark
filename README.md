@@ -1,4 +1,4 @@
-# Cockroach terraform/ansible GCE
+# airflow-scheduler for databases e-commerce benchmark
 
 # Contents
 * [installation](#install)
@@ -9,7 +9,7 @@
 Prerequisites
 ------------------
 
-Install terraform [here](https://www.terraform.io/downloads.html)
+You just need ansible, terraform and terraform-inventory on your machine and an account gcp.
 
 Or via brew on mac : 
 
@@ -37,12 +37,12 @@ Create google project and connect it to terraform
 3. Download the private ssh key and connect into your terraform to allow connection with the new instances,
    personnaly gcloud create me ssh keys when I used gcloud compute to connect to a machine.
 
-# Create databases:
+# Pop up your schedule-machine:
 
 run the app
 ------------------
 
-Check **terraform.tfvars.example** file inside `k8s-cluster` folder to see what variables you need to define before you can use terraform to create a cluster. If you have some problem go to see this : [here](https://github.com/caminale/benchmark-ecommerce-scala/blob/master/docs/gcp-configs.md)
+Check **terraform.tfvars.example** file inside `terraform` folder to see what variables you need to define before you can use terraform to create the machine. If you have some problem go to see this : [here](https://github.com/caminale/benchmark-ecommerce-scala/blob/master/docs/gcp-configs.md)
 
 You can run the following command in `terraform` to make your variables definitions available to terraform:
 ```bash
@@ -66,19 +66,6 @@ $ mv terraform.tfvars.example terraform.tfvars # variables defined in terraform.
     cd terraform
     terraform plan
     ```
-### Launch cockroach cluster :
-You have to setup your configs into `/terraform/cockroach`.
-Once this is done you
-You can launch your cluster via terraform :
-```bash
-terraform apply -target=module.cluster-cockroach
-```
-*   It will popup the instances that you have requested into your gcp account
-*   Then we setting up [TCP proxy load balancing](https://cloud.google.com/load-balancing/docs/tcp/setting-up-tcp#configure_load_balancer).
-    redirect clients in function of his geocalisation and cpu% instances
-*   After it, it will launch ansible jobs to set-up machines, install cockroach, link cockroach 's nodes and finally create databases
-*   To change cockroach version or database name, please go to this [file](./ansible/install-cockroachdb.yml)
-
 
 
 
