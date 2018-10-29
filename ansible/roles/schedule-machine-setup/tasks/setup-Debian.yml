@@ -1,0 +1,32 @@
+---
+- name: Ensure schedule packages are installed
+  apt:
+    name: "{{ schedule_machine_packages }}"
+    state: present
+
+- name: Add ansible stable repository from PPA
+  apt_repository:
+    repo: "{{ repo_ppa_ansible }}"
+    state: present
+
+- name: Install Ansible.
+  apt:
+    name: ansible
+    state: present
+
+- name: Download & Unarchive terraform binaries
+  unarchive:
+    src: "{{ terraform_binaries_url }}"
+    dest: "{{ bin_path }}"
+    remote_src: yes
+    owner: "{{ ansible_user}}"
+    group: "{{ ansible_user}}"
+
+- name: Unarchive a file that needs to be downloaded terraform
+  unarchive:
+    src: "{{ terraform_inventory_binaries_url }}"
+    dest: "{{ bin_path }}"
+    remote_src: yes
+    owner: "{{ ansible_user}}"
+    group: "{{ ansible_user}}"
+    mode: 0755

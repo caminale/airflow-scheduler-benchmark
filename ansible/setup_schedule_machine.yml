@@ -1,0 +1,7 @@
+---
+
+- name: schedule-machine setup
+  hosts: airflow
+  become: yes
+  roles:
+    - role: schedule-machine-setup
