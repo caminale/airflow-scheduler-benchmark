@@ -12,5 +12,5 @@ variable "gce_zone" {
 
 variable "machine_type" {
   default = "n1-highcpu-2"
-  description = "cockroach instance machine type"
+  description = "airflow instance machine type"
 }

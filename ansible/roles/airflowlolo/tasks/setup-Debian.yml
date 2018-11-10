@@ -1,0 +1,22 @@
+---
+
+- name: Ensure python packages are installed
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ python_packages }}"
+
+- name: Ensure airflow dependencies are installed
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ airflow_dependencies }}"
+
+- name: Ensure airflow packages are installed
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ airflow_packages }}"
