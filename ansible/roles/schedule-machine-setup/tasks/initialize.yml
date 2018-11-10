@@ -12,9 +12,36 @@
     path: "{{ deployment_databases_git_path }}/terraform"
     mode: 0777
 
+- name: Create directory for gce creds
+  file:
+    path: "{{ path_key_gcp_remote }}"
+    state: directory
+    mode: 0777
+
+- name: Copy GCP credentials
+  copy:
+    src:  "{{ path_key_gcp_local }}"
+    dest: "{{ path_key_gcp_remote }}"
+    mode: 0777
+
+- name: Copy ssh google_compute_engine to acces to instances
+  copy:
+    src:  "{{ ssh_gcp }}"
+    dest: "{{ ssh_gcp }}"
+    mode: 0777
+  vars:
+    ssh_gcp: ~/.ssh/google_compute_engine
+
 - name: Copy Script for ssh config file
   copy:
     src:  ./files/sshConfig.sh
     dest: /home/{{ ansible_user }}/.ssh
     mode: 0777
 
+- name: Configure tfvars for gcp provider access.
+  template:
+    src: "templates/terraform.tfvars.j2"
+    dest: "{{ deployment_databases_git_path }}/terraform/terraform.tfvars"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0600

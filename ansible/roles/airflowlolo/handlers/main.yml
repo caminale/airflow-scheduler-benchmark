@@ -9,11 +9,6 @@
     state: 'restarted'
   with_items: "{{ airflow_services_states }}"
   when: "item.state == 'started'"
-  tags:
-    - 'role::airflow'
-    - 'role::airflow::config'
-    - 'role::airflow::install'
-
 
 - name: 'Restart airflow-webserver'
   become: True
@@ -24,11 +19,6 @@
   when:
     - "item.name == 'airflow-webserver'"
     - "item.state == 'started'"
-  tags:
-    - 'role::airflow'
-    - 'role::airflow::config'
-    - 'role::airflow::install'
-
 
 - name: 'Restart airflow-scheduler'
   become: True
@@ -39,7 +29,17 @@
   when:
     - "item.name == 'airflow-scheduler'"
     - "item.state == 'started'"
-  tags:
-    - 'role::airflow'
-    - 'role::airflow::config'
-    - 'role::airflow::install'
+
+- name: 'Restart airflow-worker'
+  become: True
+  service:
+    name: "{{ item.name }}"
+    state: 'restarted'
+  with_items: "{{ airflow_services_states }}"
+  when:
+    - "item.name == 'airflow-worker'"
+    - "item.state == 'started'"
+
+- name: 'Start airflowdb'
+  become: True
+  command: "airflow initdb"

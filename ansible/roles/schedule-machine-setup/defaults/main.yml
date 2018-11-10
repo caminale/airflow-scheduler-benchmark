@@ -2,3 +2,8 @@
 
 deployment_databases_git: 'https://github.com/caminale/deployment-databases.git'
 deployment_databases_git_path: '/opt/deployment-databases'
+dags_folder: '/etc/airflow/dags'
+region: 'us-central1'
+project_name: 'octo-nad'
+path_key_gcp_local: '~/Documents/gcp-keys/octo.json'
+path_key_gcp_remote: '/var/gce/'

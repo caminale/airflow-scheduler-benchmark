@@ -1,2 +1,81 @@
 ---
+- name: 'Start airflowdb'
+  become: True
+  command: "airflow initdb"
 
+- name: 'CONFIG airflow.cfg | set up executor to CeleryExecutor'
+  lineinfile:
+    dest: "{{ airflow_path }}/airflow.cfg"
+    regexp: "^executor ="
+    line: "executor = LocalExecutor"
+    state: present
+  sudo: True
+
+- name: 'CONFIG airflow.cfg | set up postgres db url'
+  lineinfile:
+    dest: "{{ airflow_path }}/airflow.cfg"
+    regexp: "^sql_alchemy_conn ="
+    line: "sql_alchemy_conn = postgresql+psycopg2://{{ ansible_user }}@localhost:5432/{{ db_name }}?user={{ db_user }}&password={{ db_password }}"
+    state: present
+  sudo: True
+
+- name: 'CONFIG airflow.cfg | load exemple to false'
+  lineinfile:
+    dest: "{{ airflow_path }}/airflow.cfg"
+    regexp: "^load_examples = "
+    line: "load_examples = False"
+    state: present
+  sudo: True
+
+- name: 'CONFIG airflow.cfg | set up the broker_url'
+  lineinfile:
+    dest: "{{ airflow_path }}/airflow.cfg"
+    regexp: "^broker_url"
+    line: "broker_url = amqp://guest:guest@localhost:5672//"
+    state: present
+  sudo: True
+
+- name: 'CONFIG airflow.cfg | set up the catchup_by_default to false'
+  lineinfile:
+    dest: "{{ airflow_path }}/airflow.cfg"
+    regexp: "^catchup_by_default"
+    line: "catchup_by_default =  False"
+    state: present
+  sudo: True
+
+- name: 'CONFIG airflow.cfg | Enable auth'
+  lineinfile:
+    dest: "{{ airflow_path }}/airflow.cfg"
+    regexp: "^authenticate ="
+    line: "authenticate =  False"
+    state: present
+  sudo: True
+
+- name: 'CONFIG airflow.cfg | set up the broker_url'
+  lineinfile:
+    dest: "{{ airflow_path }}/airflow.cfg"
+    regexp: "^celery_result_backend"
+    line: "celery_result_backend = amqp://guest:guest@localhost:5672//"
+    state: present
+  sudo: True
+  notify:
+    - Restart airflow-webserver
+    - Start airflowdb
+
+- name: 'CONFIG | Ensure dags directory is created'
+  file:
+    path: "{{ airflow_path }}/dags"
+    owner: "{{ ansible_user }}"
+    mode: '0777'
+    state: 'directory'
+
+- name: 'CONFIG | Copy python script for create user'
+  copy:
+    src:  ./files/createAirflowUser.py
+    dest: "{{ airflow_path }}/"
+    mode: 0777
+  notify: 'Restart airflow'
+
+#- name: 'CONFIG | Execute python script for create user'
+#  command: "python {{ airflow_path }}/createAirflowUser.py {{ item }}"
+#  with_items: "{{ airflow_creds }}"

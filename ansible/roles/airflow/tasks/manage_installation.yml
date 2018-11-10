@@ -51,3 +51,4 @@
     virtualenv_python: "{{ airflow_python_version }}"
   changed_when: "airflow_pip_changed_when"
   with_items: "{{ airflow_extra_packages }}"
+

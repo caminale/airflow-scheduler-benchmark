@@ -1,0 +1,6 @@
+---
+- name: Generic host setup
+  hosts: airflow
+  become: yes
+  roles:
+    - role: postgres

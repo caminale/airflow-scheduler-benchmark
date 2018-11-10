@@ -1,0 +1,30 @@
+__python_packages:
+  - python-setuptools
+  - python-pip
+
+__airflow_dependencies:
+  - libmysqlclient-dev
+  - libssl-dev
+  - libkrb5-dev
+  - libsasl2-dev
+
+__airflow_packages:
+  - async
+  - devel
+  - celery
+  - druid
+  - crypto
+  - gcp_api
+  - jdbc
+  - hdfs
+  - hive
+  - kerberos
+  - ldap
+  - password
+  - postgres
+  - qds
+  - rabbitmq
+  - s3
+  - samba
+  - slack
+

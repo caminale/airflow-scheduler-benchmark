@@ -8,3 +8,5 @@
   when: ansible_os_family == 'Debian'
 
 - include_tasks: initialize.yml
+
+- include_tasks: manage-dags.yml

@@ -1,0 +1,6 @@
+---
+- name: add dags in airflow
+  copy:
+    src:  ../../../dags/.
+    dest: "{{ airflow_config.core.dags_folder }}"
+    mode: 0777

@@ -58,3 +58,6 @@
   tags:
     - 'role::airflow'
     - 'role::airflow::config'
+
+- name: 'CONFIG | Include dags code'
+  include: "{{ role_path }}/tasks/manage_dags.yml"

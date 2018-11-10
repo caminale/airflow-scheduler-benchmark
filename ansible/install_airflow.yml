@@ -2,5 +2,11 @@
 - name: Generic host setup
   hosts: airflow
   become: yes
+  vars:
+    airflow_path: '/var/lib/airflow'
   roles:
-    - role: airflow
+    - role: airflow-role
+#  environment:
+#    AIRFLOW_HOME: "{{ airflow_path }}"
+#    AIRFLOW_GPL_UNIDECODE: 'yes'
+#    SLUGIFY_USES_TEXT_UNIDECODE: 'yes'

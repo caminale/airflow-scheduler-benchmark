@@ -1,5 +1,12 @@
 ---
 
+- name: Ensure Airflow directory is created
+  file:
+    path: "{{ airflow_path }}"
+    owner: "{{ ansible_user }}"
+    mode: '0777'
+    state: directory
+
 - name: Ensure python packages are installed
   apt:
     name: "{{ item }}"
@@ -7,16 +14,34 @@
     update_cache: yes
   with_items: "{{ python_packages }}"
 
+- name: install the package, force upgrade
+  pip:
+    name: pip
+    extra_args: --upgrade
+
 - name: Ensure airflow dependencies are installed
   apt:
     name: "{{ item }}"
     state: present
     update_cache: yes
   with_items: "{{ airflow_dependencies }}"
+  notify: Start airflowdb
 
-- name: Ensure airflow packages are installed
-  apt:
-    name: "{{ item }}"
-    state: present
-    update_cache: yes
+
+
+- name: Install Airflow Extra Packages
+  become: yes
+  command:  pip install airflow[{{ item }}]
   with_items: "{{ airflow_packages }}"
+  notify: Start airflowdb
+
+- name: Backward version of an package for setting airflow user password
+  become: yes
+  command:  pip install 'sqlalchemy<1.2'
+  notify: Start airflowdb
+
+
+
+
+
+

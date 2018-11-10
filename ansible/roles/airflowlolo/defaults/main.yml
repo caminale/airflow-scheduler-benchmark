@@ -1,0 +1,22 @@
+---
+
+db_name: 'airflow'
+db_password: 'jw8s0F4'
+db_user: 'camelot'
+airflow_services_states:
+  - name: 'airflow-webserver'
+    enabled: True
+    state: 'started'
+  - name: 'airflow-scheduler'
+    enabled: True
+    state: 'started'
+  - name: 'airflow-worker'
+    enabled: True
+    state: 'started'
+airflow_creds:
+- username_airflow: 'camelot'
+  password_airflow: '0205lolo'
+  email_airflow: 'camelot@gmail.com'
+
+
+

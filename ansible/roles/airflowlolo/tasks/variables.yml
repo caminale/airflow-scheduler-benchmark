@@ -1,0 +1,20 @@
+---
+
+- name: Include OS-specific variables (Debian).
+  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version.split('.')[0] }}.yml"
+  when: ansible_os_family == 'Debian'
+
+- name: Define python packages
+  set_fact:
+    python_packages: "{{ __python_packages | list }}"
+  when: python_packages is not defined
+
+- name: Define aiflow dependencies
+  set_fact:
+    airflow_dependencies: "{{ __airflow_dependencies | list }}"
+  when: airflow_dependencies is not defined
+
+- name: Define aiflow packages
+  set_fact:
+    airflow_packages: "{{ __airflow_packages | list }}"
+  when: airflow_packages is not defined

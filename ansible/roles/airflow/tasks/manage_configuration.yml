@@ -73,7 +73,7 @@
 
 
 # Manage database initialize if first deployment
-- name: 'CONFIG | Manage database initialize'
+- name: 'CONFIG | AManage database initialize'
   become_user: "{{ airflow_user_name }}"
   command: "{{ airflow_virtualenv }}/bin/airflow initdb"
   when:
