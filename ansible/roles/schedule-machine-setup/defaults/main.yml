@@ -1,9 +1,13 @@
 ---
 
 deployment_databases_git: 'https://github.com/caminale/deployment-databases.git'
+deployment_k8s_application_scala_git: 'https://github.com/caminale/gcp-kubernetes-scala-api.git'
 deployment_databases_git_path: '/opt/deployment-databases'
+deployment_k8s_application_scala_git_path: '/opt/gcp-kubernetes-scala-api'
 dags_folder: '/etc/airflow/dags'
 region: 'us-central1'
+zone: "europe-west1-b"
+initial_node_count_k8s: 2
 project_name: 'octo-nad'
 path_key_gcp_local: '~/Documents/gcp-keys/octo.json'
 path_key_gcp_remote: '/var/gce/'

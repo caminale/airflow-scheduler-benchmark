@@ -69,7 +69,7 @@ airflow_enable_xcom_pickling: "True"
 airflow_killed_task_cleanup_time: 60
 airflow_dag_run_conf_overrides_params: "False"
 
-airflow_load_examples: True
+airflow_load_examples: False
 
 # The executor class that airflow should use. Choices include
 # SequentialExecutor, LocalExecutor, CeleryExecutor, DaskExecutor

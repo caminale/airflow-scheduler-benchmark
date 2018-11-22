@@ -7,6 +7,13 @@
     dest: "{{ deployment_databases_git_path }}"
     force: yes
 
+- name: Get deployment k8s application scala github project
+  git:
+    repo: "{{ deployment_k8s_application_scala_git }}"
+    version: master
+    dest: "{{ deployment_k8s_application_scala_git_path }}"
+    force: yes
+
 - name: Make my directory tree readable & executable
   file:
     path: "{{ deployment_databases_git_path }}/terraform"
@@ -39,9 +46,26 @@
     mode: 0777
 
 - name: Configure tfvars for gcp provider access.
+  file:
+    dest: "{{ deployment_databases_git_path }}/terraform/"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    recurse: yes
+    mode: 0777
+
+- name: Configure tfvars for gcp provider access for deployment databases.
   template:
-    src: "templates/terraform.tfvars.j2"
+    src: "templates/terraform.tfvars.deploymentDB.j2"
     dest: "{{ deployment_databases_git_path }}/terraform/terraform.tfvars"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0600
+
+- name: Configure tfvars for gcp provider access for deployment k8s.
+  template:
+    src: "templates/terraform.tfvars.deploymentK8S.j2"
+    dest: "{{ deployment_k8s_application_scala_git_path }}/k8s-cluster/terraform.tfvars"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: 0600

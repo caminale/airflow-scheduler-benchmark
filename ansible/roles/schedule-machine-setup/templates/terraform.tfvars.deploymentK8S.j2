@@ -1,0 +1,16 @@
+region="{{ region }}"
+
+
+project_name="{{ project_name }}"
+project_id="{{ project_name }}"
+account_file_path="{{ path_key_gcp_remote }}octo.json"
+
+region="{{ region }}"
+name = "k8s-cluster"
+description = "Test cluster to showcase CI/CD with k8s, Gitlab CI, and Helm"
+zone = "{{ zone }}"
+initial_node_count = "{{ initial_node_count_k8s }}" # number of nodes in the cluster
+
+ntw_name = "k8s-cluster-network" # VPC network name which will be created
+
+dns_domain = "k8s.caminamle.ovh"
